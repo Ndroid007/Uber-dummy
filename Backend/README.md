@@ -89,6 +89,13 @@ This endpoint is used to authenticate a user and provide a JWT token for accessi
 ### Request Body
 The endpoint expects the following data in JSON format:
 
+```json
+{
+  "email": "string", // Required: The email address of the user
+  "password": "string" // Required: The password for the user account
+}
+```
+
 ### Response
 
 #### Success Response
@@ -135,6 +142,110 @@ The endpoint expects the following data in JSON format:
 
 - **Status Code:** 500 Internal Server Error
 
+  - **Reason:** Unexpected server error.
+  - **Body:**
+    ```json
+    {
+      "error": "An error occurred while processing your request"
+    }
+    ```
+
+
+## Endpoint: `/users/profile`
+
+### Description
+This endpoint retrieves the profile information of the currently authenticated user.
+
+### HTTP Method
+`GET`
+
+### Authentication
+This is a protected route and requires a valid JWT token to be sent in the Authorization header or as a cookie.
+
+### Request Headers
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+### Request Body
+No request body required.
+
+### Response
+
+#### Success Response
+- **Status Code:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "id": "string",
+    "firstname": "string",
+    "lastname": "string",
+    "email": "string",
+    "createAt": "datetime"
+  }
+  ```
+
+#### Error Responses
+- **Status Code:** `401 Unauthorized`
+  - **Reason:** Missing or invalid JWT token.
+  - **Body:**
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+- **Status Code:** `500 Internal Server Error`
+  - **Reason:** Unexpected server error.
+  - **Body:**
+    ```json
+    {
+      "error": "An error occurred while processing your request"
+    }
+    ```
+
+
+## Endpoint: `/users/logout`
+
+### Description
+This endpoint logs out the currently authenticated user by blacklisting their JWT token and clearing the authentication cookie.
+
+### HTTP Method
+`GET`
+
+### Authentication
+This is a protected route and requires a valid JWT token to be sent in the Authorization header or as a cookie.
+
+### Request Headers
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+### Request Body
+No request body required.
+
+### Response
+
+#### Success Response
+- **Status Code:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "message": "Logged out"
+  }
+  ```
+
+#### Error Responses
+- **Status Code:** `401 Unauthorized`
+  - **Reason:** Missing or invalid JWT token.
+  - **Body:**
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+- **Status Code:** `500 Internal Server Error`
   - **Reason:** Unexpected server error.
   - **Body:**
     ```json
